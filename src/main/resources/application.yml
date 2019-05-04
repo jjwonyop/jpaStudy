@@ -1,23 +1,25 @@
 logging:
   level:
     org.hibernate.SQL: DEBUG
-    org.hibernate.type.descriptor.sql.BasicBinder: ON
+    org.hibernate.type.descriptor.sql.BasicBinder: off
     jdbc: OFF
     jdbc.sqltiming: DEBUG
     jdbc.resultsettable: DEBUG
+
 spring:
   data:
     jpa:
       repositories:
         enabled: true
   jpa:
-    show-sql: true
+    #show-sql: true
+    properties:
+      hibernate:
+    #    format_sql: true
     hibernate:
       ddl-auto: update
       #ddl-auto: validate
-      properties:
-        hibernate:
-          format_sql: true
+
   datasource:
     url: jdbc:log4jdbc:oracle:thin:@localhost:1521:xe
     username: oracle_jpa
