@@ -1,7 +1,8 @@
 logging:
   level:
     org.hibernate.SQL: DEBUG
-    org.hibernate.type.descriptor.sql.BasicBinder: off
+    org.hibernate.type.descriptor.sql.BasicBinder: debug
+    org.hibrenate.type.descriptor.sql: trace
     jdbc: OFF
     jdbc.sqltiming: DEBUG
     jdbc.resultsettable: DEBUG
@@ -15,7 +16,7 @@ spring:
     #show-sql: true
     properties:
       hibernate:
-    #    format_sql: true
+        format_sql: true
     hibernate:
       ddl-auto: update
       #ddl-auto: validate

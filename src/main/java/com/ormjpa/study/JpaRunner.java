@@ -19,6 +19,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @Component
 @Transactional
@@ -124,7 +125,8 @@ public class JpaRunner implements ApplicationRunner {
         List<Post> resultList = entityManager.createQuery(criteriaQuery).getResultList();
         resultList.forEach(System.out::println);
 
-        List<Post> all = postRepository.findAll();
-        all.forEach(System.out::println);
+        System.out.println("=====================================");
+        Optional<Post> byId = postRepository.findById(21L);
+        byId.ifPresent(System.out::println);
     }
 }
