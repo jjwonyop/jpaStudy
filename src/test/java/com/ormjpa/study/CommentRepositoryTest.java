@@ -12,6 +12,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -28,10 +29,15 @@ public class CommentRepositoryTest {
         commentRepository.save(comments);
 
         List<Comments> all = commentRepository.findAll();
+        // jpa에서는 빈 collection을 return해줌
         assertThat(all.size()).isEqualTo(1);
 
         long count = commentRepository.count();
         assertThat(count).isEqualTo(1);
+
+        Optional<Comments> byId = commentRepository.findById(100l);
+        assertThat(byId).isEmpty();
+
     }
 
 }

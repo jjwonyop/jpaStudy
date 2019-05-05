@@ -23,4 +23,8 @@ public class Comments {
 
     @ManyToOne
     private Post post;
+
+    private String title;
+
+    private Integer likeCount;
 }
