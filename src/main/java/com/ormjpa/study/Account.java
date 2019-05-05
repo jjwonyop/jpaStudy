@@ -15,7 +15,7 @@ import java.util.Set;
 
 @Entity
 @Data
-@EqualsAndHashCode(of={"id", "password"})
+@EqualsAndHashCode(of={"id", "password", "username"})
 public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ACNT_SEQ")
