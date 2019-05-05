@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 public interface CommentRepository extends MyRepository<Comments, Long> {
 
@@ -28,4 +29,12 @@ public interface CommentRepository extends MyRepository<Comments, Long> {
     List<Comments> findByTitleContains(String keyword);
 
     Page<Comments> findByLikeCountGreaterThanAndPost(int likeCount, Post post, Pageable pageable);
+
+    List<Comments> findByCommentsContainsIgnoreCase(String keyword);
+
+    List<Comments> findByCommentsContainsIgnoreCaseAndLikeCountGreaterThan(String keyword, int likeCount);
+
+    List<Comments> findByCommentsContainsIgnoreCaseOrderByLikeCountDesc(String keyword);
+
+    Stream<Comments> findByCommentsContainsIgnoreCaseOrderByLikeCountAsc(String keyword);
 }
