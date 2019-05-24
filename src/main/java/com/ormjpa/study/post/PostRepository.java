@@ -3,7 +3,7 @@
  * Made by jjwonyop
  */
 
-package com.ormjpa.study;
+package com.ormjpa.study.post;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

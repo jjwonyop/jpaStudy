@@ -5,6 +5,8 @@
 
 package com.ormjpa.study;
 
+import com.ormjpa.study.post.Post;
+import com.ormjpa.study.post.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -21,12 +23,12 @@ import java.util.Optional;
 
 //@Component
 //@Transactional
-public class JpaRunner implements ApplicationRunner {
+public class JpaRunner  {
 
     @PersistenceContext
     EntityManager entityManager;
 
-    @Autowired
+//    @Autowired
     PostRepository postRepository;
 
     /**
@@ -35,9 +37,9 @@ public class JpaRunner implements ApplicationRunner {
      * @param args incoming application arguments
      * @throws Exception on error
      */
-    @Override
+//    @Override
 //    @Transactional
-    public void run(ApplicationArguments args) throws Exception {
+//    public void run(ApplicationArguments args) throws Exception {
 //        Account account = new Account();
 //        account.setUsername("juwon");
 //        account.setPassword("pass");
@@ -102,29 +104,29 @@ public class JpaRunner implements ApplicationRunner {
         // JPQL(HQL)
         // 테이블 단위가 아닌, 엔티티 객체 모델 기반으로 쿼리 작성
         // type safe하지 않음
-        TypedQuery<Post> query = entityManager.createQuery("SELECT p FROM Post AS p", Post.class);
-
-        List<Post> posts = query.getResultList();
-        posts.forEach(System.out::println);
-
-        // criteria
-        // type safe한 쿼리
-        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
-        CriteriaQuery<Post> criteriaQuery = criteriaBuilder.createQuery(Post.class);
-        Root<Post> root = criteriaQuery.from(Post.class);
-        criteriaQuery.select(root);
-
-        // Native SQL
-        Query nativeQuery = entityManager.createNativeQuery("SELECT * FROM POST", Post.class);
-        List<Post> resultList1 = nativeQuery.getResultList();
-        resultList1.forEach(System.out::println);
-
-
-        List<Post> resultList = entityManager.createQuery(criteriaQuery).getResultList();
-        resultList.forEach(System.out::println);
-
-        System.out.println("=====================================");
-        Optional<Post> byId = postRepository.findById(21L);
-        byId.ifPresent(System.out::println);
-    }
+//        TypedQuery<Post> query = entityManager.createQuery("SELECT p FROM Post AS p", Post.class);
+//
+//        List<Post> posts = query.getResultList();
+//        posts.forEach(System.out::println);
+//
+//        // criteria
+//        // type safe한 쿼리
+//        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+//        CriteriaQuery<Post> criteriaQuery = criteriaBuilder.createQuery(Post.class);
+//        Root<Post> root = criteriaQuery.from(Post.class);
+//        criteriaQuery.select(root);
+//
+//        // Native SQL
+//        Query nativeQuery = entityManager.createNativeQuery("SELECT * FROM POST", Post.class);
+//        List<Post> resultList1 = nativeQuery.getResultList();
+//        resultList1.forEach(System.out::println);
+//
+//
+//        List<Post> resultList = entityManager.createQuery(criteriaQuery).getResultList();
+//        resultList.forEach(System.out::println);
+//
+//        System.out.println("=====================================");
+//        Optional<Post> byId = postRepository.findById(21L);
+//        byId.ifPresent(System.out::println);
+//    }
 }

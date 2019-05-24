@@ -5,6 +5,7 @@
 
 package com.ormjpa.study;
 
+import com.ormjpa.study.post.Post;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 

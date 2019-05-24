@@ -1,9 +1,29 @@
-plugins {
-    id 'org.springframework.boot' version '2.1.4.RELEASE'
-    id 'java'
+buildscript {
+    ext {
+        springBootVersion = '2.1.5.RELEASE'
+        querydslPluginVersion = '1.0.10'
+    }
+    repositories {
+        mavenCentral()
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        } // plugin 저장소
+        maven {
+            url "https://code.lds.org/nexus/content/groups/main-repo"
+        }
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath "io.spring.gradle:dependency-management-plugin:1.0.7.RELEASE"
+        classpath("gradle.plugin.com.ewerk.gradle.plugins:querydsl-plugin:${querydslPluginVersion}")
+    }
 }
 
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
+apply plugin: "com.ewerk.gradle.plugins.querydsl"
 
 group = 'com.ormjpa'
 version = '0.0.1-SNAPSHOT'
@@ -17,7 +37,7 @@ configurations {
 
 repositories {
     mavenCentral()
-    maven() {
+    maven {
         url "https://code.lds.org/nexus/content/groups/main-repo"
     }
 }
@@ -30,5 +50,33 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     compile 'org.bgee.log4jdbc-log4j2:log4jdbc-log4j2-jdbc4.1:1.16'
     testRuntime 'com.h2database:h2'
-    //compile 'org.springframework.boot:spring-boot-starter-web'
+    compile 'com.querydsl:querydsl-apt'
+    compile 'com.querydsl:querydsl-jpa'
+    compile 'org.springframework.boot:spring-boot-starter-web'
+    testRuntime 'com.h2database:h2'
 }
+// querydsl 적용
+def querydslSrcDir = 'build/generated/sources/java'
+
+querydsl {
+    library = "com.querydsl:querydsl-apt"
+    jpa = true
+    querydslSourcesDir = querydslSrcDir
+}
+
+sourceSets {
+    main {
+        java {
+            srcDirs = ['src/main/java', querydslSrcDir]
+        }
+    }
+}
+
+compileQuerydsl{
+    options.annotationProcessorPath = configurations.querydsl
+}
+
+configurations {
+    querydsl.extendsFrom compileClasspath
+}
+

@@ -5,10 +5,13 @@
 
 package com.ormjpa.study;
 
+import com.ormjpa.study.post.Post;
+import com.ormjpa.study.post.PostRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.context.annotation.Import;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.test.annotation.Rollback;
@@ -20,6 +23,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
+@Import(PostRepositoryConfigTest.class)
 public class PostRepositoryTest {
     @Autowired
     PostRepository postRepository;
@@ -34,7 +38,7 @@ public class PostRepositoryTest {
         assertThat(post.getId()).isNull();
 
         // When
-        Post newPost = postRepository.save(post);
+        Post newPost = postRepository.save(post.publish());
 
         // Then
         assertThat(newPost).isNotNull();
@@ -64,7 +68,6 @@ public class PostRepositoryTest {
         long hello = postRepository.countByTitleContains("Hello");
         // Then
         assertThat(hello).isEqualTo(1);
-
     }
 
 }
